@@ -5,10 +5,6 @@ import {UnprocessableEntityError} from "../errors/UnorocessableEntityError";
 
 export const addNewBook = async (bookDto: BookDTO)=>{
     const book = new BookModel(bookDto)
-    // book.title = bookDto.title,
-    // book.description = bookDto.description,
-    // book.author = bookDto.author
-
 
     const bookCheck = await BookModel.find({'title': book.title})
 
