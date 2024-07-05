@@ -1,7 +1,7 @@
 import {Router} from "express";
 import {BookDTO} from "../dtos";
 import {validation} from "../validation";
-import {addNewBook} from "../services/bookService";
+import {addNewBook, getAllBooks, getBook} from "../services/bookService";
 
 export const booksRouter = Router();
 
@@ -29,7 +29,23 @@ booksRouter.post("", async (req, res,next) => {
         }
     }
 })
-booksRouter.get("", async (req, res) => {})
-booksRouter.get("/:id", async (req, res) => {})
+booksRouter.get("", async (req, res,next) => {
+    try {
+        const books = await getAllBooks();
+        res.json(books);
+    } catch (error) {
+        next(error)
+    }
+})
+booksRouter.get("/:id", async (req, res,next) => {
+    try {
+        const book:BookDTO = await getBook(req.params.id);
+        res.json(book);
+    } catch (error) {
+        next(error)
+    }
+})
 booksRouter.patch("/:id", async (req, res) => {})
-booksRouter.delete("/:id", async (req, res) => {})
+booksRouter.delete("/:id", async (req, res) => {
+
+})
