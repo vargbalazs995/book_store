@@ -1,7 +1,8 @@
 import {Router} from "express";
-import {BookDTO} from "../dtos";
+import {BookDTO, UpdateBookDto} from "../dtos";
 import {validation} from "../validation";
-import {addNewBook, getAllBooks, getBook} from "../services/bookService";
+import {addNewBook, deleteBook, getAllBooks, getBook, updateBook} from "../services/bookService";
+import {validateOrReject} from "class-validator";
 
 export const booksRouter = Router();
 
@@ -45,7 +46,30 @@ booksRouter.get("/:id", async (req, res,next) => {
         next(error)
     }
 })
-booksRouter.patch("/:id", async (req, res) => {})
-booksRouter.delete("/:id", async (req, res) => {
+booksRouter.patch("/:id", async (req, res, next) => {
+    const bookDto: UpdateBookDto = req.body
 
+        try {
+        await validateOrReject(bookDto);
+    } catch (errors) {
+        return res.status(400).json({ errors });
+    }
+
+    {
+        try{
+            const message = await updateBook(req.params.id, bookDto);
+            res.status(201).json({success:true, message});
+        }catch(error){
+            next(error)
+            res.status(400).json({error:error})
+        }
+    }
+})
+booksRouter.delete("/:id", async (req, res,next) => {
+    try {
+        await deleteBook(req.params.id);
+        res.json();
+    } catch (error) {
+        next(error)
+    }
 })

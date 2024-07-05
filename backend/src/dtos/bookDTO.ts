@@ -11,3 +11,12 @@ export class BookDTO {
     @IsOptional()
     reviews!: ReviewDTO[];
 }
+
+export class UpdateBookDto{
+    @IsDefined()
+    title?: string
+    @IsDefined()
+    description?: string
+    @IsDefined()
+    author?: string
+}

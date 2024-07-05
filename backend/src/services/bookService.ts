@@ -1,4 +1,4 @@
-import {BookDTO} from "../dtos";
+import {BookDTO, UpdateBookDto} from "../dtos";
 import {BookModel} from "../entities/bookEntity";
 import {UnprocessableEntityError} from "../errors/UnorocessableEntityError";
 
@@ -20,7 +20,6 @@ export const getAllBooks = async()=> {
         books.push(bookDTO);
     });
     return books;
-
 }
 
 export const getBook = async (id:string) => {
@@ -33,10 +32,25 @@ export const addNewBook = async (bookDto: BookDTO)=>{
 
     const bookCheck = await BookModel.find({'title': bookModel.title})
 
-    if(!bookCheck){
+    if(bookCheck){
         throw new UnprocessableEntityError("Book already exists");
     }else {
         await bookModel.save();
         return "book";
     }
+}
+
+export const deleteBook = async (id:string) => {
+    const bookModel = await BookModel.findById(id)
+
+    if(!bookModel){
+        throw new UnprocessableEntityError("Book doesn't exists");
+    }else {
+        await bookModel.deleteOne({'id':id});
+        await bookModel.save();
+    }
+}
+
+export const updateBook = async (id: string, bookDto:UpdateBookDto)=>{
+    const bookModel = await BookModel.findByIdAndUpdate(id, bookDto, {new: true, runValidators:true})
 }
