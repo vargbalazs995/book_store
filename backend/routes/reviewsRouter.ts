@@ -1,8 +1,9 @@
 import {Router} from "express";
 
 export const reviewsRouter = Router();
+export const booksReviewsRouter = Router();
 
-reviewsRouter.post("/books/:bookId/reviews", async (req, res) => {})
-reviewsRouter.get('/books/:bookId/reviews', async (req, res) => {})
-reviewsRouter.patch("/reviews/:id", async (req, res) => {})
-reviewsRouter.delete("/reviews/:id", async (req, res) => {})
+booksReviewsRouter.post("/:bookId/reviews", async (req, res) => {})
+booksReviewsRouter.get('/:bookId/reviews', async (req, res) => {})
+reviewsRouter.patch("/:id", async (req, res) => {})
+reviewsRouter.delete("/:id", async (req, res) => {})
