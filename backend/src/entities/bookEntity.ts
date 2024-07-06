@@ -1,12 +1,19 @@
-import * as mongoose from "mongoose";
+import {model,Schema,Types,Model} from "mongoose";
 
-const {Schema}= mongoose;
+export interface IBook extends Document {
+    _id: Types.ObjectId;
+    title: string;
+    description: string;
+    author: string;
+    reviews: [Types.ObjectId]
+}
 
-const bookSchema = new Schema({
+export const bookSchema = new Schema<IBook>({
+    _id: Types.ObjectId,
     title: {type:String, required:true, unique: true},
     description: String,
     author: String,
-    reviews: {type:Schema.Types.ObjectId, ref:"Review"},
+    reviews: [{type:Types.ObjectId, ref:"Review"}],
 })
 
-export const BookModel = mongoose.model('Books', bookSchema);
+export const BookModel : Model<IBook> = model('Book', bookSchema);
