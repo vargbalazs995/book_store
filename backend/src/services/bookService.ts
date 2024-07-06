@@ -2,7 +2,7 @@ import {BookDTO, UpdateBookDto} from "../dtos";
 import {BookModel} from "../entities/bookEntity";
 import {UnprocessableEntityError} from "../errors/UnorocessableEntityError";
 
-const mapBookToDto = (book: any):BookDTO =>{
+export const mapBookToDto = (book: any):BookDTO =>{
     const bookDto = new BookDTO();
     bookDto.title = book.title
     bookDto.description= book.description
@@ -30,7 +30,7 @@ export const getBook = async (id:string) => {
 export const addNewBook = async (bookDto: BookDTO)=>{
     const bookModel = new BookModel(bookDto)
 
-    const bookCheck = await BookModel.find({'title': bookModel.title})
+    const bookCheck = await BookModel.find({title: bookDto.title})
 
     if(bookCheck){
         throw new UnprocessableEntityError("Book already exists");
