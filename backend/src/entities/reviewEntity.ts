@@ -1,11 +1,17 @@
-import * as mongoose from "mongoose";
+import {model,Schema,Types,Model} from "mongoose";
 
-const {Schema} = mongoose;
+export interface IReview extends Document{
+    _id: Types.ObjectId,
+    review: string,
+    rating: number,
+    user: [Types.ObjectId]
+}
 
-const reviewSchema = new Schema({
+export const reviewSchema = new Schema<IReview>({
+    _id: Schema.Types.ObjectId,
     review: {type: String, min:50},
     rating: Number,
-    user: {type: Schema.Types.ObjectId, ref: "User"}
+    user: [{type: Types.ObjectId, ref: "User"},]
 })
 
-export const reviewModel = mongoose.model('Review', reviewSchema);
+export const ReviewModel:Model<IReview> = model('Review', reviewSchema);
