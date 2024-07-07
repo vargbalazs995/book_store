@@ -1,23 +1,31 @@
-import {IsDefined, IsEmail, IsNotEmpty} from "class-validator";
+import {IsDefined, IsEmail, IsNotEmpty, IsString, Matches} from "class-validator";
 
-export class CreateAccountDTO {
+export class RegisterDTO {
     @IsDefined()
     @IsNotEmpty()
+    @IsString()
     username!: string
+
     @IsDefined()
     @IsNotEmpty()
+    @IsString()
+    @Matches('/^(?=.*[A-Z])(?=(.*\d){2,}).{8,}$/')
     password!: string
+
     @IsDefined()
     @IsNotEmpty()
     @IsEmail()
     email!: string
 }
 
-export class LoginUserDTO{
+export class LoginDTO{
     @IsDefined()
     @IsNotEmpty()
+    @IsString()
     username!:string
+
     @IsDefined()
     @IsNotEmpty()
+    @IsString()
     password!:string
 }
