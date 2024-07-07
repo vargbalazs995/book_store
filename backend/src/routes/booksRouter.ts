@@ -26,7 +26,6 @@ booksRouter.post("", async (req, res,next) => {
             res.status(201).json({success:true, message});
         }catch(error){
             next(error)
-            res.status(400).json({error:error})
         }
     }
 })
@@ -61,7 +60,6 @@ booksRouter.patch("/:id", async (req, res, next) => {
             res.status(201).json({success:true, message});
         }catch(error){
             next(error)
-            res.status(400).json({error:error})
         }
     }
 })

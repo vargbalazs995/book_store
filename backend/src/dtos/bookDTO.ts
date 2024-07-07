@@ -3,6 +3,8 @@ import {ReviewDTO} from "./reviewDTO";
 
 export class BookDTO {
     @IsDefined()
+    _id!: string;
+    @IsDefined()
     title!: string
     @IsDefined()
     description!: string

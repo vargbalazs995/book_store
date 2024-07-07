@@ -4,6 +4,7 @@ import {UnprocessableEntityError} from "../errors/UnorocessableEntityError";
 
 export const mapBookToDto = (book: any):BookDTO =>{
     const bookDto = new BookDTO();
+    bookDto._id = book.id;
     bookDto.title = book.title
     bookDto.description= book.description
     bookDto.author=book.author
@@ -24,19 +25,19 @@ export const getAllBooks = async()=> {
 
 export const getBook = async (id:string) => {
     const bookModel = await BookModel.findById(id)
+
     return mapBookToDto(bookModel)
 }
 
 export const addNewBook = async (bookDto: BookDTO)=>{
     const bookModel = new BookModel(bookDto)
-
-    const bookCheck = await BookModel.find({title: bookDto.title})
+    const bookCheck = await BookModel.findOne({title: bookDto.title})
 
     if(bookCheck){
         throw new UnprocessableEntityError("Book already exists");
     }else {
         await bookModel.save();
-        return "book";
+        return "Book added successfully";
     }
 }
 
@@ -48,9 +49,16 @@ export const deleteBook = async (id:string) => {
     }else {
         await bookModel.deleteOne({'id':id});
         await bookModel.save();
+        return "Book deleted successfully";
     }
 }
 
 export const updateBook = async (id: string, bookDto:UpdateBookDto)=>{
-    const bookModel = await BookModel.findByIdAndUpdate(id, bookDto, {new: true, runValidators:true})
+    const bookModel = await BookModel.findById(id)
+    if(!bookModel){
+        throw new UnprocessableEntityError("Book doesn't exists");
+        } else {
+     await BookModel.findByIdAndUpdate(id, bookDto, {new: true, runValidators:true})
+        return "Book updated successfully"
+        }
 }
