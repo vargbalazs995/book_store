@@ -9,11 +9,11 @@ export interface IBook extends Document {
 }
 
 export const bookSchema = new Schema<IBook>({
-    _id: Types.ObjectId,
+    _id: { type: Schema.Types.ObjectId, auto: true },
     title: {type:String, required:true, unique: true},
     description: String,
     author: {type:String, required:true},
-    reviews: [{type:Types.ObjectId, ref:"Review", default:null}],
+    reviews: [{type:Schema.Types.ObjectId, ref:"Review", default:null}],
 })
 
 export const BookModel : Model<IBook> = model('Book', bookSchema);

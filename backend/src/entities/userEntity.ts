@@ -9,11 +9,11 @@ export interface IUser extends Document{
 }
 
 export const userSchema = new Schema<IUser>({
-    _id: Types.ObjectId,
+    _id: { type: Schema.Types.ObjectId, auto: true },
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     email: {type: String, required: true, unique: true},
-    reviews: [{type: Schema.Types.ObjectId, ref: 'Reviews',default: null}]
+    reviews: [{type: Schema.Types.ObjectId, ref: 'Review',default: null}]
 })
 
 export const UserModel: Model<IUser> = model('User', userSchema);

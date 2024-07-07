@@ -9,7 +9,7 @@ export interface IReview extends Document{
 }
 
 export const reviewSchema = new Schema<IReview>({
-    _id: Schema.Types.ObjectId,
+    _id: { type: Schema.Types.ObjectId, auto: true },
     review: {type: String, min:20,required: true},
     rating: {type: Number, required:true},
     book_id: {type: Schema.Types.ObjectId, ref: "Book"},
