@@ -12,8 +12,8 @@ export const bookSchema = new Schema<IBook>({
     _id: Types.ObjectId,
     title: {type:String, required:true, unique: true},
     description: String,
-    author: String,
-    reviews: [{type:Types.ObjectId, ref:"Review"}],
+    author: {type:String, required:true},
+    reviews: [{type:Types.ObjectId, ref:"Review", default:null}],
 })
 
 export const BookModel : Model<IBook> = model('Book', bookSchema);
