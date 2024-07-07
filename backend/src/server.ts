@@ -8,6 +8,8 @@ import {UserModel} from "./entities/userEntity";
 import {ReviewModel} from "./entities/reviewEntity";
 import {BookModel} from "./entities/bookEntity";
 import bodyParser from "body-parser";
+import YAML from "yamljs";
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
 app.use(express.json());
@@ -34,4 +36,8 @@ const initCollections = async () => {
     } catch (err){
         console.error('Error until initializing collections:',err);
     }
+
 };
+
+const swaggerDocument = YAML.load("./src/apidocs.yaml");
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
