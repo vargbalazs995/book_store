@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import {MONGODB_URI, ORIGIN, PORT} from "./configuration";
 import {rootRouter} from "./routes/rootRouter";
 import express from "express";
@@ -6,9 +7,11 @@ import * as mongoose from "mongoose";
 import {UserModel} from "./entities/userEntity";
 import {ReviewModel} from "./entities/reviewEntity";
 import {BookModel} from "./entities/bookEntity";
+import bodyParser from "body-parser";
 
 const app = express();
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(cors({origin: ORIGIN, credentials: true}));
 app.use(rootRouter);
 
