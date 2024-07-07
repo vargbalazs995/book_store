@@ -5,6 +5,7 @@ export interface IUser extends Document{
     username: string,
     password: string,
     email: string,
+    reviews: [Types.ObjectId]
 }
 
 export const userSchema = new Schema<IUser>({
@@ -12,6 +13,7 @@ export const userSchema = new Schema<IUser>({
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     email: {type: String, required: true, unique: true},
+    reviews: [{type: Schema.Types.ObjectId, ref: 'Reviews',default: null}]
 })
 
 export const UserModel: Model<IUser> = model('User', userSchema);
