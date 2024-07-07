@@ -1,0 +1,13 @@
+<div class="container text-center">
+  <div class="row" >
+    <div class="col">
+      <ng-container *ngIf="false">
+      <book-details (modify)="receiveBook($event)"></book-details>
+      <book-create [modify]="(bookModify)"></book-create>
+      </ng-container>
+      <book-card></book-card>
+
+
+    </div>
+  </div>
+</div>
