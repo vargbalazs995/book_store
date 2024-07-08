@@ -13,7 +13,7 @@ export const register = async (registerDTO: RegisterDTO) => {
         throw new BadRequestError('Username already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(registerUserDto.password, SALT_ROUNDS);
+    const hashedPassword = await bcrypt.hash(registerUserDto.password, Number(SALT_ROUNDS));
 
     const newUser = new UserModel({
         username: registerDTO.username,

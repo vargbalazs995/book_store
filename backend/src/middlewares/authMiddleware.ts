@@ -18,6 +18,8 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
         // @ts-ignore
         req.userId = (decoded as any).id;
+
         next();
     });
 };
+

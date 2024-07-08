@@ -6,7 +6,7 @@ import {validationMiddleware} from "../middlewares/validationMiddleware";
 
 export const usersRouter = Router();
 
-usersRouter.post("/register", validationMiddleware(RegisterDTO), async (req, res, next) => {
+usersRouter.post("/", validationMiddleware(RegisterDTO), async (req, res) => {
   try {
       const registerDTO: RegisterDTO = req.body;
       const message = await register(registerDTO);
