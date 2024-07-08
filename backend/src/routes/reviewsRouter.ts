@@ -1,6 +1,6 @@
 import {Router} from "express";
 import {authMiddleware} from "../middlewares";
-import {IdentityDTO, PostReviewDTO, ReviewDTO, UserReviewDTO} from "../dtos";
+import {IdentityDTO, PostReviewDTO, ReviewDTO} from "../dtos";
 import {
     addNewReview,
     deleteReview,
@@ -39,7 +39,6 @@ booksReviewsRouter.post("/:bookId/reviews",authMiddleware, async (req, res,next)
      }
  })
 
-
 reviewsRouter.patch("/:id", authMiddleware,async (req, res,next) => {
    try{
     const reviewDto : ReviewDTO = {
@@ -54,6 +53,7 @@ reviewsRouter.patch("/:id", authMiddleware,async (req, res,next) => {
        next(error)
    }
 })
+
 reviewsRouter.delete("/:id",authMiddleware, async (req, res,next) => {
     try{
         //@ts-ignore

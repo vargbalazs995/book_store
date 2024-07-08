@@ -29,6 +29,7 @@ booksRouter.post("", async (req, res,next) => {
         }
     }
 })
+
 booksRouter.get("", async (req, res,next) => {
     try {
         const books = await getAllBooks();
@@ -37,6 +38,7 @@ booksRouter.get("", async (req, res,next) => {
         next(error)
     }
 })
+
 booksRouter.get("/:id", async (req, res,next) => {
     try {
         const book:BookDTO = await getBook(req.params.id);
@@ -45,6 +47,7 @@ booksRouter.get("/:id", async (req, res,next) => {
         next(error)
     }
 })
+
 booksRouter.patch("/:id", async (req, res, next) => {
     const bookDto: UpdateBookDto = req.body
 
@@ -63,10 +66,11 @@ booksRouter.patch("/:id", async (req, res, next) => {
         }
     }
 })
+
 booksRouter.delete("/:id", async (req, res,next) => {
     try {
-        await deleteBook(req.params.id);
-        res.json();
+        const message = await deleteBook(req.params.id);
+        res.json(message);
     } catch (error) {
         next(error)
     }

@@ -57,7 +57,9 @@ export class IdentityDTO {
 
 export class PatchReviewDTO {
     @IsDefined()
+    @MinLength(50, {message: "Review should be at least 50 characters"})
     review?:string;
     @IsDefined()
+    @IsInt({message: "Rate should be a valid number!"})
     rating?:number;
 }

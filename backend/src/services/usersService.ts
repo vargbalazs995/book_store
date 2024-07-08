@@ -51,5 +51,4 @@ export const getUserData = async(userId: string)=>{
     }} catch {
         throw new BadRequestError('User does not exist');
     }
-
 }
