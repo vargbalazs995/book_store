@@ -27,6 +27,8 @@ booksReviewsRouter.post("/:bookId/reviews",authMiddleware, async (req, res,next)
         }
 })
 
+
+
  booksReviewsRouter.get('/:bookId/reviews', async (req, res,next) => {
      const bookId = req.params.bookId;
 

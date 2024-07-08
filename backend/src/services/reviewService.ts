@@ -1,4 +1,4 @@
-import {IdentityDTO, PatchReviewDTO, PostReviewDTO, ReviewBookDTO, ReviewDTO, UserReviewDTO} from "../dtos";
+import {IdentityDTO, PatchReviewDTO, PostReviewDTO, ReviewBookDTO, ReviewDTO} from "../dtos";
 import {BookModel} from "../entities/bookEntity";
 import {UnprocessableEntityError} from "../errors/UnorocessableEntityError";
 import {ReviewModel} from "../entities/reviewEntity";
@@ -116,6 +116,6 @@ export const deleteReview = async (reviewId : string, userId: string) => {
         return "Review deleted successfully"
     } catch (error) {
         console.error(error);
-        throw new Error('Error updating review');
+        throw new Error('Error deleting review');
     }
 };

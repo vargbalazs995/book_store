@@ -2,9 +2,7 @@ import {IsDefined, IsInt, MinLength} from "class-validator";
 
 export class PostReviewDTO {
     @IsDefined()
-    id!:string
-    @IsDefined()
-    @MinLength(50, {message: "Review should be at least 50 characters"})
+    @MinLength(10, {message: "Review should be at least 50 characters"})
     review!: string
     @IsDefined()
     @IsInt({message: "Rate should be a valid number!"})
@@ -14,7 +12,7 @@ export class ReviewDTO{
     @IsDefined()
     id!:string
     @IsDefined()
-    @MinLength(50, {message: "Review should be at least 50 characters"})
+    @MinLength(10, {message: "Review should be at least 50 characters"})
     review!: string
     @IsDefined()
     @IsInt({message: "Rate should be a valid number!"})
@@ -25,7 +23,7 @@ export class UserReviewDTO{
     @IsDefined()
     id!:string
     @IsDefined()
-    @MinLength(50, {message: "Review should be at least 50 characters"})
+    @MinLength(10, {message: "Review should be at least 50 characters"})
     review!: string
     @IsDefined()
     @IsInt({message: "Rate should be a valid number!"})
@@ -36,7 +34,7 @@ export class UserReviewDTO{
 
 export class ReviewBookDTO{
     @IsDefined()
-    @MinLength(50, {message: "Review should be at least 50 characters"})
+    @MinLength(10, {message: "Review should be at least 50 characters"})
     review!: string
     @IsDefined()
     @IsInt({message: "Rate should be a valid number!"})
@@ -57,7 +55,7 @@ export class IdentityDTO {
 
 export class PatchReviewDTO {
     @IsDefined()
-    @MinLength(50, {message: "Review should be at least 50 characters"})
+    @MinLength(10, {message: "Review should be at least 50 characters"})
     review?:string;
     @IsDefined()
     @IsInt({message: "Rate should be a valid number!"})

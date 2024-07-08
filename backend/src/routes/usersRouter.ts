@@ -28,7 +28,7 @@ usersRouter.post("/login", validationMiddleware(LoginDTO), async (req, res, next
     }
 });
 
-usersRouter.post("/me",authMiddleware, async (req, res,next) => {
+usersRouter.get("/me",authMiddleware, async (req, res,next) => {
     try{
         //@ts-ignore
         const userId : string =req.userId

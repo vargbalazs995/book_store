@@ -47,14 +47,20 @@ export const addNewBook = async (bookDto: PostBookDTO)=>{
 }
 
 export const deleteBook = async (id:string) => {
-    const bookModel = await BookModel.findById(id)
+    try{
+        const bookModel = await BookModel.findById(id);
 
-    if(!bookModel){
-        throw new UnprocessableEntityError("Book doesn't exists");
-    }else {
-        await bookModel.deleteOne({'id':id});
-        await bookModel.save();
+        if (!bookModel) {
+            console.error(`Book with id ${id} not found.`);
+            throw new UnprocessableEntityError("Book doesn't exist");
+        }
+
+        await BookModel.findByIdAndDelete(id)
         return "Book deleted successfully";
+
+    }catch(error){
+        console.error( error);
+        throw new Error('Error deleting book');
     }
 }
 

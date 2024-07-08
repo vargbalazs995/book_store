@@ -1,4 +1,4 @@
-import {IsDefined, IsEmail, IsNotEmpty, IsString, Matches} from "class-validator";
+import {IsDefined, IsEmail, IsNotEmpty, IsString, } from "class-validator";
 
 export class RegisterDTO {
     @IsDefined()
@@ -9,7 +9,6 @@ export class RegisterDTO {
     @IsDefined()
     @IsNotEmpty()
     @IsString()
-    @Matches('/^(?=.*[A-Z])(?=(.*\d){2,}).{8,}$/')
     password!: string
 
     @IsDefined()
