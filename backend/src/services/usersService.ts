@@ -1,4 +1,4 @@
-import {RegisterDTO, LoginDTO} from "../dtos";
+import {RegisterDTO, LoginDTO, UserDTO} from "../dtos";
 import {UserModel} from "../entities/userEntity";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
@@ -36,4 +36,20 @@ export const login= async(loginDTO:LoginDTO)=>{
         return "The password doesn't match";
     }
     return jwt.sign({ id: user._id, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
+}
+
+export const getUserData = async(userId: string)=>{
+    try{
+    const userModel = await UserModel.findById(userId);
+
+    if (userModel) {
+    const userDto : UserDTO = {
+        username: userModel.username,
+        email: userModel.email
+    }
+    return userDto;
+    }} catch {
+        throw new BadRequestError('User does not exist');
+    }
+
 }

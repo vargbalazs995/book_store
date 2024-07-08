@@ -29,3 +29,10 @@ export class LoginDTO{
     @IsString()
     password!:string
 }
+
+export class UserDTO {
+    @IsDefined()
+    username!: string;
+    @IsDefined()
+    email!: string;
+}

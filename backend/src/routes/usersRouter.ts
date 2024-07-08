@@ -1,7 +1,8 @@
 import {Router} from "express";
 import {LoginDTO, RegisterDTO} from "../dtos";
-import {register, login} from "../services/usersService";
+import {register, login, getUserData} from "../services/usersService";
 import {validationMiddleware} from "../middlewares/validationMiddleware";
+import {authMiddleware} from "../middlewares";
 
 
 export const usersRouter = Router();
@@ -27,4 +28,13 @@ usersRouter.post("/login", validationMiddleware(LoginDTO), async (req, res, next
     }
 });
 
-usersRouter.post("/me", async (req, res,next) => {})
+usersRouter.post("/me",authMiddleware, async (req, res,next) => {
+    try{
+        //@ts-ignore
+        const userId : string =req.userId
+        const message = await getUserData(userId)
+        res.status(200).json({message});
+    }catch (error){
+        next(error)
+    }
+})
