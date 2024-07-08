@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {BookDTO, UpdateBookDto} from "../dtos";
+import {BookDTO, PostBookDTO, UpdateBookDto} from "../dtos";
 import {validation} from "../validation";
 import {addNewBook, deleteBook, getAllBooks, getBook, updateBook} from "../services/bookService";
 import {validateOrReject} from "class-validator";
@@ -7,7 +7,7 @@ import {validateOrReject} from "class-validator";
 export const booksRouter = Router();
 
 booksRouter.post("", async (req, res,next) => {
-    const bookDto: BookDTO = new BookDTO()
+    const bookDto: PostBookDTO = new PostBookDTO()
     bookDto.title = req.body.title;
     bookDto.description = req.body.description;
     bookDto.author = req.body.author

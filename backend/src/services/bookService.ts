@@ -1,4 +1,4 @@
-import {BookDTO, UpdateBookDto} from "../dtos";
+import {BookDTO, PostBookDTO, UpdateBookDto} from "../dtos";
 import {BookModel} from "../entities/bookEntity";
 import {UnprocessableEntityError} from "../errors";
 import {Types} from "mongoose";
@@ -34,7 +34,7 @@ export const getBook = async (id:string) => {
     return mapBookToDto(bookModel)
 }
 
-export const addNewBook = async (bookDto: BookDTO)=>{
+export const addNewBook = async (bookDto: PostBookDTO)=>{
     const bookModel = new BookModel(bookDto)
     const bookCheck = await BookModel.findOne({title: bookDto.title})
 

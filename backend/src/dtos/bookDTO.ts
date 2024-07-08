@@ -27,3 +27,15 @@ export class UpdateBookDto{
     @IsDefined()
     author?: string
 }
+
+export class PostBookDTO{
+    @IsDefined()
+    @IsNotEmpty()
+    title!:string;
+    @IsDefined()
+    @IsNotEmpty()
+    description!:string;
+    @IsDefined()
+    @IsNotEmpty()
+    author!:string;
+}
