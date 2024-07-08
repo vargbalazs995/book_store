@@ -5,6 +5,7 @@ export interface NewBook {
 }
 
 export interface ModifiedBook {
+  _id?: string;
   title?: string;
   author?: string;
   description?: string;

@@ -8,7 +8,6 @@ import {BookService} from "../book.service";
   styleUrls: ['./book-details.component.css']
 })
 export class BookDetailsComponent {
-  @Output() modify:EventEmitter<boolean> = new EventEmitter();
   @Output() modifyId:EventEmitter<string> = new EventEmitter();
   @Input() receivedBook?: BookDetails;
 
@@ -16,10 +15,9 @@ export class BookDetailsComponent {
 
   modifyBook(id:string){
     this.modifyId.emit(id)
-    this.modify.emit(true);
   }
 
   deleteBook(id: string){
-    this.bookService.deleteBookById(id)
+    this.bookService.deleteBookById(id).subscribe()
 }
 }

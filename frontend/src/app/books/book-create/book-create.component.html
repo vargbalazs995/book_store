@@ -13,7 +13,7 @@
   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="description"></textarea>
 </div>
   <br>
-  <button type="button" class="btn btn-success" *ngIf="modify"  (click)="addBook()">Létrehozás</button>
-    <button type="button" class="btn btn-success" *ngIf="!modify"  (click)="modifyBook()">Módosítás</button>
+  <button type="button" class="btn btn-success" *ngIf="!modify"  (click)="addBook()">Létrehozás</button>
+    <button type="button" class="btn btn-success" *ngIf="modify"  (click)="modifyBook()">Módosítás</button>
   </form>
 </div>

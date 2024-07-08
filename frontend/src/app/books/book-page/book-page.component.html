@@ -1,13 +1,16 @@
 <div class="container text-center">
   <div class="row" >
     <div class="col">
-      <ng-container *ngIf="false">
-      <book-details [receivedBook]="selectedBook" (modify)="receiveBook($event)">
+      <ng-container *ngIf="!selectedBook">
+        <book-card [book]="books" (bookdId)="findBookById($event)"></book-card>
+      </ng-container>
+      <ng-container *ngIf="selectedBook">
+      <book-details [receivedBook]="selectedBook" (modifyId)="receiveBook($event)">
       </book-details>
+      </ng-container>
+      <ng-container *ngIf="bookModify">
       <book-create [modify]="(bookModify)"></book-create>
       </ng-container>
-      <book-card [book]="books" (bookdId)="findBookById($event)"></book-card>
-
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BookDetails} from "./book.model";
+import {BookDetails, ModifiedBook, NewBook} from "./book.model";
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +20,13 @@ export class BookService {
 
   deleteBookById(id: string) {
     return this.http.delete<BookDetails>(this.apiUrl+`/${id}`)
+  }
+
+  patchBookById(id: string, book: ModifiedBook) {
+    return this.http.patch<BookDetails>(this.apiUrl+`/${id}`, book)
+  }
+
+  postBook(book:NewBook){
+    return this.http.post<NewBook>(this.apiUrl, book)
   }
 }

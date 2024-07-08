@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BookService} from "../book.service";
-import {Router} from "@angular/router";
-import {BookDetails} from "../book.model";
+import {BookDetails, ModifiedBook} from "../book.model";
 
 @Component({
   selector: 'app-book-page',
@@ -11,9 +10,9 @@ import {BookDetails} from "../book.model";
 export class BookPageComponent implements OnInit {
   books:BookDetails[] = []
   selectedBook?:BookDetails;
-  bookModify: boolean = false;
+  bookModify?: ModifiedBook ;
 
-  constructor(private bookService: BookService, private router: Router) { }
+  constructor(private bookService: BookService) { }
 
   ngOnInit(): void {
     this.getAllBooks()
@@ -23,13 +22,14 @@ export class BookPageComponent implements OnInit {
     this.bookService.fetchAllBook().subscribe((book:BookDetails[]) => this.books =book)
   }
 
-  receiveBook(book: boolean){
-    this.bookModify = book;
+  receiveBook(id: string){
+    this.bookService.getBookById(id).subscribe((book:ModifiedBook)=>{
+      this.bookModify = book})
   }
 
   findBookById(id: string){
-    this.bookService.getBookById(id).subscribe((book:BookDetails)=>{
+    this.bookService.getBookById(id).subscribe((book:BookDetails)=>{console.log(book)
       this.selectedBook = book})
-    this.router.navigate(['/book/'+id]);
   }
+
 }
