@@ -1,7 +1,7 @@
 import {Router} from "express";
 import {authMiddleware} from "../middlewares";
-import {IdentityDTO, PostReviewDTO} from "../dtos";
-import {addNewReview, enrichReviewsWithUsernames, getReviewsByBookId} from "../services/reviewService";
+import {IdentityDTO, PostReviewDTO, ReviewDTO, UserReviewDTO} from "../dtos";
+import {addNewReview, enrichReviewsWithUsernames, getReviewsByBookId, updateReview} from "../services/reviewService";
 
 export const reviewsRouter = Router();
 export const booksReviewsRouter = Router();
@@ -21,7 +21,7 @@ booksReviewsRouter.post("/:bookId/reviews",authMiddleware, async (req, res,next)
         }
 })
 
- booksReviewsRouter.get('/:bookId/reviews',authMiddleware, async (req, res,next) => {
+ booksReviewsRouter.get('/:bookId/reviews', async (req, res,next) => {
      const bookId = req.params.bookId;
 
      try {
@@ -34,5 +34,18 @@ booksReviewsRouter.post("/:bookId/reviews",authMiddleware, async (req, res,next)
  })
 
 
-reviewsRouter.patch("/:id", async (req, res) => {})
+reviewsRouter.patch("/:id", authMiddleware,async (req, res,next) => {
+   try{
+    const reviewDto : ReviewDTO = {
+    id:req.params.id,
+    review:req.body.review,
+    rating: req.body.rating}
+    //@ts-ignore
+    const userId : string =req.userId
+    const message =await updateReview(reviewDto, userId);
+    res.json(message)
+   }catch(error){
+       next(error)
+   }
+})
 reviewsRouter.delete("/:id", async (req, res) => {})

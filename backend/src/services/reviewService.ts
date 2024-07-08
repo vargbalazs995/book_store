@@ -1,4 +1,4 @@
-import {IdentityDTO, PostReviewDTO, ReviewBookDTO} from "../dtos";
+import {IdentityDTO, PatchReviewDTO, PostReviewDTO, ReviewBookDTO, ReviewDTO, UserReviewDTO} from "../dtos";
 import {BookModel} from "../entities/bookEntity";
 import {UnprocessableEntityError} from "../errors/UnorocessableEntityError";
 import {ReviewModel} from "../entities/reviewEntity";
@@ -60,3 +60,34 @@ export const enrichReviewsWithUsernames = async (reviews: any[]): Promise<Review
     }
 };
 
+export const updateReview = async (review: ReviewDTO, userId: string) => {
+    try {
+        const reviewModel = await ReviewModel.findById(review.id);
+
+        if (!reviewModel) {
+            throw new Error('Review not found');
+        }
+
+        const userModel = await UserModel.findById(userId).lean().exec();
+
+        if (!userModel) {
+            throw new Error('User not found');
+        }
+
+        const hasReview = userModel.reviews.toString().includes(review.id);
+
+        if (!hasReview) {
+            throw new Error('User does not have permission to update this review');
+        }
+
+        const patchReviewDto: PatchReviewDTO= {
+            review :  review.review,
+            rating : review.rating,
+        }
+
+        return await ReviewModel.findByIdAndUpdate(review.id, patchReviewDto)
+    } catch (error) {
+        console.error(error);
+        throw new Error('Error updating review');
+    }
+};

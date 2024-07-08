@@ -54,3 +54,10 @@ export class IdentityDTO {
     @IsDefined()
     userId!:string
 }
+
+export class PatchReviewDTO {
+    @IsDefined()
+    review?:string;
+    @IsDefined()
+    rating?:number;
+}
