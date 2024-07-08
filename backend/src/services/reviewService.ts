@@ -91,3 +91,31 @@ export const updateReview = async (review: ReviewDTO, userId: string) => {
         throw new Error('Error updating review');
     }
 };
+
+export const deleteReview = async (reviewId : string, userId: string) => {
+    try {
+        const reviewModel = await ReviewModel.findById(reviewId);
+
+        if (!reviewModel) {
+            throw new Error('Review not found');
+        }
+
+        const userModel = await UserModel.findById(userId).lean().exec();
+
+        if (!userModel) {
+            throw new Error('User not found');
+        }
+
+        const hasReview = userModel.reviews.toString().includes(reviewId);
+
+        if (!hasReview) {
+            throw new Error('User does not have permission to delete this review');
+        }
+
+        await ReviewModel.findByIdAndDelete(reviewId);
+        return "Review deleted successfully"
+    } catch (error) {
+        console.error(error);
+        throw new Error('Error updating review');
+    }
+};

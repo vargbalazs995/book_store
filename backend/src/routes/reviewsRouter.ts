@@ -1,7 +1,13 @@
 import {Router} from "express";
 import {authMiddleware} from "../middlewares";
 import {IdentityDTO, PostReviewDTO, ReviewDTO, UserReviewDTO} from "../dtos";
-import {addNewReview, enrichReviewsWithUsernames, getReviewsByBookId, updateReview} from "../services/reviewService";
+import {
+    addNewReview,
+    deleteReview,
+    enrichReviewsWithUsernames,
+    getReviewsByBookId,
+    updateReview
+} from "../services/reviewService";
 
 export const reviewsRouter = Router();
 export const booksReviewsRouter = Router();
@@ -48,4 +54,13 @@ reviewsRouter.patch("/:id", authMiddleware,async (req, res,next) => {
        next(error)
    }
 })
-reviewsRouter.delete("/:id", async (req, res) => {})
+reviewsRouter.delete("/:id",authMiddleware, async (req, res,next) => {
+    try{
+        //@ts-ignore
+        const userId : string =req.userId
+        const message = await deleteReview(req.params.id, userId)
+        res.json(message)
+    }catch(error){
+        next(error)
+    }
+})
