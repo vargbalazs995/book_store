@@ -1,4 +1,6 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {BookDetails} from "../book.model";
+import {BookService} from "../book.service";
 
 @Component({
   selector: 'book-details',
@@ -7,9 +9,17 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class BookDetailsComponent {
   @Output() modify:EventEmitter<boolean> = new EventEmitter();
+  @Output() modifyId:EventEmitter<string> = new EventEmitter();
+  @Input() receivedBook?: BookDetails;
 
-  modifyBook(){
+  constructor(private bookService: BookService) {}
+
+  modifyBook(id:string){
+    this.modifyId.emit(id)
     this.modify.emit(true);
   }
 
+  deleteBook(id: string){
+    this.bookService.deleteBookById(id)
+}
 }

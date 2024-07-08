@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {BookDetails} from "../book.model";
 
 @Component({
   selector: 'book-card',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./book-card.component.css']
 })
 export class BookCardComponent {
+  @Input() book?: BookDetails[];
+  @Output() bookdId:EventEmitter<string> = new EventEmitter<string>();
+
+
+  submitBookId(id:string){
+    this.bookdId.emit(id)
+  }
 
 }

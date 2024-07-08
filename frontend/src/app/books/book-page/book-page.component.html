@@ -2,11 +2,11 @@
   <div class="row" >
     <div class="col">
       <ng-container *ngIf="false">
-      <book-details (modify)="receiveBook($event)"></book-details>
+      <book-details [receivedBook]="selectedBook" (modify)="receiveBook($event)">
+      </book-details>
       <book-create [modify]="(bookModify)"></book-create>
       </ng-container>
-      <book-card></book-card>
-
+      <book-card [book]="books" (bookdId)="findBookById($event)"></book-card>
 
     </div>
   </div>
