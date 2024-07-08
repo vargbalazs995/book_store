@@ -1,6 +1,8 @@
 import {BookDTO, UpdateBookDto} from "../dtos";
 import {BookModel} from "../entities/bookEntity";
-import {UnprocessableEntityError} from "../errors/UnorocessableEntityError";
+import {UnprocessableEntityError} from "../errors";
+import {Types} from "mongoose";
+import {ReviewModel} from "../entities/reviewEntity";
 
 export const mapBookToDto = (book: any):BookDTO =>{
     const bookDto = new BookDTO();
@@ -8,18 +10,21 @@ export const mapBookToDto = (book: any):BookDTO =>{
     bookDto.title = book.title
     bookDto.description= book.description
     bookDto.author=book.author
+    bookDto.avgRating= book.avgRating
     bookDto.reviews=book.reviews
     return bookDto
 }
 
 export const getAllBooks = async()=> {
     const books : BookDTO[] = []
-    const bookModel = await BookModel.find()
+    const bookModel = await BookModel.find().exec();
 
-    bookModel.forEach((book) => {
-        const bookDTO = mapBookToDto(book)
+    for(const book of bookModel){
+        const avgRating = await averageRatingCalculator(book.reviews)
+        const bookDTO = mapBookToDto(book);
+        bookDTO.avgRating = avgRating;
         books.push(bookDTO);
-    });
+    }
     return books;
 }
 
@@ -61,4 +66,19 @@ export const updateBook = async (id: string, bookDto:UpdateBookDto)=>{
      await BookModel.findByIdAndUpdate(id, bookDto, {new: true, runValidators:true})
         return "Book updated successfully"
         }
+}
+
+export const averageRatingCalculator = async(reviews: Types.ObjectId[] )=>{
+    if(reviews.length == 0){
+        return 0
+    }
+
+    let sumOfRates = 0;
+
+    const reviewIds: Types.ObjectId[] = reviews.map(review => review._id);
+    const reviewList = await ReviewModel.find({ _id: { $in: reviewIds } }).lean().exec();
+
+    reviewList.forEach((review) => sumOfRates += review.rating);
+
+    return sumOfRates / reviewList.length;
 }
